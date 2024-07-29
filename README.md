@@ -66,7 +66,8 @@ curl http://localhost:4566/_localstack/health | jq
 - `terraform plan` used for linting and shows what TF intends to do
   1. It reads the configuration and the state file
   2. Determine the needed CRUD actions to take
-  3. Output the execution plan (Can be saved in JSON format ex `terraform plan -out plan.out`)
+  3. Output the execution plan (Can be saved in JSON format ex `terraform plan -out plan.out && terraform show -json plan.out > plan.json`)
+  * You can apply the binary file as well via `terraform apply plan.out`
 ```bash
 # Linting + shows what TF intends to do
 terraform plan
