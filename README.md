@@ -1,6 +1,8 @@
 # OpenTofu
 OpenTofu is a fork of Hashicorp's terraform (Due to license changes)
 
+- It's a state management solution that performs CRUD operations on managed resources.
+
 ---
 
 ### Install OpenTofu
@@ -47,4 +49,25 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 curl http://localhost:4566/_localstack/health | jq
+```
+
+---
+
+### Building blocks
+
+#### [Providers](https://developer.hashicorp.com/terraform/language/providers)
+- Plugins mainly used for interacting with cloud providers (But not necessarily)
+- An example can be [`AWS provider`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) but also can be [`local provider`](https://registry.terraform.io/providers/hashicorp/local/latest/docs)
+- Each time you add a new provider, you should use `terraform init`.
+
+---
+
+### CLI
+- `terraform plan` used for linting and shows what TF intends to do
+  1. It reads the configuration and the state file
+  2. Determine the needed CRUD actions to take
+  3. Output the execution plan (Can be saved in JSON format ex `terraform plan -out plan.out`)
+```bash
+# Linting + shows what TF intends to do
+terraform plan
 ```
