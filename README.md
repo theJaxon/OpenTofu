@@ -21,3 +21,30 @@ rm install-opentofu.sh
 vi ~/.bashrc
 alias terraform=tofu
 ```
+
+---
+
+### Docker
+```bash
+# https://docs.rockylinux.org/gemstones/containers/docker/
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo systemctl --now enable docker
+sudo usermod -a -G docker $(whoami)
+```
+
+### LocalStack
+```bash
+# Download CLI
+python3 -m pip install localstack
+
+GATEWAY_LISTEN="0.0.0.0" localstack start -d
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+
+unzip awscliv2.zip
+
+sudo ./aws/install
+
+curl http://localhost:4566/_localstack/health | jq
+```
