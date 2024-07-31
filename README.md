@@ -72,3 +72,5 @@ curl http://localhost:4566/_localstack/health | jq
 # Linting + shows what TF intends to do
 terraform plan
 ```
+
+- `terraform refresh` is used for updating the state file (Used for detecting drifts).
