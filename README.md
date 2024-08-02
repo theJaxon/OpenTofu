@@ -62,6 +62,18 @@ curl http://localhost:4566/_localstack/health | jq
 
 ---
 
+### Best practices
+#### Put static files in a separate directory
+- Create `files` directory for static files that will be referenced (ex: startup scripts).
+- Separate `HereDoc` from HCL code and use **file()** function to reference them.
+- `.tftpl` extension should be used by files by files consumed via **templatefile()** function.
+- templates should be placed under `templates` directory. 
+
+#### Protect stateful resources
+- Lifecycle Meta-argument [`prevent_destroy`](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#prevent_destroy) can be used to prevent stateful resource deletion.
+
+---
+
 ### CLI
 - `terraform plan` used for linting and shows what TF intends to do
   1. It reads the configuration and the state file
@@ -74,3 +86,8 @@ terraform plan
 ```
 
 - `terraform refresh` is used for updating the state file (Used for detecting drifts).
+
+---
+
+### References
+1. Architecting AWS with Terraform: Design resilient and secure Cloud Infrastructures with Terraform on Amazon Web Services
