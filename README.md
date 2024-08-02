@@ -60,6 +60,14 @@ curl http://localhost:4566/_localstack/health | jq
 - An example can be [`AWS provider`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) but also can be [`local provider`](https://registry.terraform.io/providers/hashicorp/local/latest/docs)
 - Each time you add a new provider, you should use `terraform init`.
 
+#### [Data sources](https://developer.hashicorp.com/terraform/language/data-sources)
+- Use information defined outside of terraform
+
+#### [Modules](https://developer.hashicorp.com/terraform/language/modules)
+- Allows encapsulating a group of resources that perform one task into a collection of standard configuration files within a dedicated directory.
+- Enables code reuse
+- They can be local or remote (HTTP URL or module registry)
+
 ---
 
 ### Best practices
@@ -71,6 +79,21 @@ curl http://localhost:4566/_localstack/health | jq
 
 #### Protect stateful resources
 - Lifecycle Meta-argument [`prevent_destroy`](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#prevent_destroy) can be used to prevent stateful resource deletion.
+
+#### Use count for conditional variables
+```hcl
+variable "my_var" {
+  description = ""
+  type = list
+  default = []
+}
+
+resource "resource_type" "reference_name" {
+  // Do not create this resource if the list is empty
+  // Resource gets created only if length is anything other than 0.
+  count = length(var.readers) == 0 ? 0 : 1
+}
+```
 
 ---
 
