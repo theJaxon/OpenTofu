@@ -3,11 +3,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "cidr_block" {
-  description = "VPC CIDR Block."
-  default     = "10.0.0.0/16"
-}
-
 variable "aws_profile" {
   description = "AWS profile to be used for provisioning resources (Should map to the profile in the shared credentials file)."
 }
@@ -17,11 +12,16 @@ variable "shared_credentials_files" {
   type        = list(string)
 }
 
-variable "vpc_name" {
-  description = "VPC is where our AWS resources will be launched."
-  default     = "jenkins_vpc"
-}
-
 variable "owner" {
   description = "Can be used to track monthly costs be user."
+}
+
+variable "infra_env" {
+  description = "Current environment that the project will be deployed on."
+  type        = string
+}
+
+variable "project" {
+  description = "Name of the current project."
+  type        = string
 }
