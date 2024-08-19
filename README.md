@@ -58,7 +58,7 @@ curl http://localhost:4566/_localstack/health | jq
 #### [Providers](https://developer.hashicorp.com/terraform/language/providers)
 - Plugins mainly used for interacting with cloud providers (But not necessarily)
 - An example can be [`AWS provider`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) but also can be [`local provider`](https://registry.terraform.io/providers/hashicorp/local/latest/docs)
-- Each time you add a new provider, you should use `terraform init`.
+- Each time you add (or modify) a provider, module or provisioner you should use `terraform init`.
 
 #### [Data sources](https://developer.hashicorp.com/terraform/language/data-sources)
 - Use information defined outside of terraform
@@ -67,6 +67,28 @@ curl http://localhost:4566/_localstack/health | jq
 - Allows encapsulating a group of resources that perform one task into a collection of standard configuration files within a dedicated directory.
 - Enables code reuse
 - They can be local or remote (HTTP URL or module registry)
+
+##### Root module
+- top-level module (Where `terraform init` and `terraform apply` commands are executed)
+
+#### [Locals](https://developer.hashicorp.com/terraform/language/values/locals)
+- Helpful to avoid repeating the same values or expressions multiple times
+- Use cases can be
+  - Concatenating variables to form a new resource name
+  - Using functions on inputs/outputs
+  - Using conditionals
+
+#### [State file](https://developer.hashicorp.com/terraform/language/state)
+- Stores current infrastructure configuration
+- Deployed resources get mapped to the configuration in the state file
+
+##### Structure
+- `main.tofu` Entry point, calls modules, locals and data sources to create needed resources
+- `providers.tofu` Contains list of used providers
+- `variables.tofu` Input variables declaration
+- `outputs.tofu` Output from resources created by OpenTofu
+- `versions.tofu` Version locking for used providers
+- `terraform.tfvars` Values for the variables defined in variables file
 
 ---
 
@@ -95,6 +117,10 @@ resource "resource_type" "reference_name" {
 }
 ```
 
+#### Have an example directory within the module directory
+- This elaborates how the module can be deployed
+- Can be used for code testing
+
 ---
 
 ### CLI
@@ -111,6 +137,9 @@ terraform plan
 - `terraform refresh` is used for updating the state file (Used for detecting drifts).
 
 ---
+
+### Cons
+- Redundant variable declaration (Needs to be declared across the modules and in the root module) => Terragrunt/Terramate should be checked.
 
 ### References
 1. Architecting AWS with Terraform: Design resilient and secure Cloud Infrastructures with Terraform on Amazon Web Services
