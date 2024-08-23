@@ -53,30 +53,18 @@ curl http://localhost:4566/_localstack/health | jq
 
 ---
 
-### Building blocks
-
-#### [Providers](https://developer.hashicorp.com/terraform/language/providers)
-- Plugins mainly used for interacting with cloud providers (But not necessarily)
-- An example can be [`AWS provider`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) but also can be [`local provider`](https://registry.terraform.io/providers/hashicorp/local/latest/docs)
-- Each time you add (or modify) a provider, module or provisioner you should use `terraform init`.
-
-#### [Data sources](https://developer.hashicorp.com/terraform/language/data-sources)
-- Use information defined outside of terraform
-
-#### [Modules](https://developer.hashicorp.com/terraform/language/modules)
-- Allows encapsulating a group of resources that perform one task into a collection of standard configuration files within a dedicated directory.
-- Enables code reuse
-- They can be local or remote (HTTP URL or module registry)
+### HCL Building Blocks
+- settings => Can be specified in `versions.tofu` file to lock specific versions to ensure that we always get same results
+- Provider => Defines the plugins to be downloaded and used (ex: AWS provider)
+- resource => Defines the needed resources that we want to spin up
+- data => Load or query data from APIs or other Terraform workspaces
+- Input variables (Declared in `variables.tofu` file)
+- Local variables => Used to reduce repetitive references to expressions or values
+- Output values => Export data about resources (Can be used as a data source for other workspaces) , they're used to share data from child to root module (use `terraform output -json` to save outputs to be consumed later on)
+- Modules => Combine resources that are frequently used together into a reusable container
 
 ##### Root module
 - top-level module (Where `terraform init` and `terraform apply` commands are executed)
-
-#### [Locals](https://developer.hashicorp.com/terraform/language/values/locals)
-- Helpful to avoid repeating the same values or expressions multiple times
-- Use cases can be
-  - Concatenating variables to form a new resource name
-  - Using functions on inputs/outputs
-  - Using conditionals
 
 #### [State file](https://developer.hashicorp.com/terraform/language/state)
 - Stores current infrastructure configuration
