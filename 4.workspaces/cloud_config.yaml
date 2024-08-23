@@ -1,0 +1,19 @@
+package_update: true
+package_upgrade: true
+
+packages:
+  - apache2
+
+write_files:
+  - path: /var/www/html/index.html
+    owner: 'root:root'
+    permissions: '0644'
+    content: |
+      <html>
+      <body>
+        <h1>Welcome from <u>${env}</u> env</h1>
+      </body>
+      </html>
+
+runcmd:
+  - sudo systemctl enable --now apache2
