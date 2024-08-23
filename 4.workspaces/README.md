@@ -4,4 +4,16 @@
 
 ```bash
 tofu workspace list
+
+# Create and switch to new workspace
+tofu workspace new dev
+tofu workspace new test
+
+tofu workspace select dev
+tofu apply -auto-approve -var-file environments/dev/terraform.tfvars
+tofu destroy -auto-approve -var-file environments/dev/terraform.tfvars
+
+tofu workspace select test
+tofu apply -auto-approve -var-file environments/test/terraform.tfvars
+tofu destroy -auto-approve -var-file environments/test/terraform.tfvars
 ```
