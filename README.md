@@ -101,7 +101,7 @@ variable "my_var" {
 resource "resource_type" "reference_name" {
   // Do not create this resource if the list is empty
   // Resource gets created only if length is anything other than 0.
-  count = length(var.readers) == 0 ? 0 : 1
+  count = length(var.my_var) == 0 ? 0 : 1
 }
 ```
 
